@@ -1,0 +1,15 @@
+name: Recover Relay Staging C4 Image
+on:
+  pull_request:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+concurrency:
+  group: forged-recover
+  cancel-in-progress: true
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    environment: protected-probe
+    steps:
+      - run: echo waiting for environment approval
