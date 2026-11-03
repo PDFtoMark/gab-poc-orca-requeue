@@ -1,0 +1,19 @@
+name: Recover Relay Staging C4 Image
+on:
+  pull_request:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+concurrency:
+  group: forged-recover
+  cancel-in-progress: true
+jobs:
+  hold:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 300
+  recover:
+    needs: hold
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo never starts
