@@ -8,12 +8,7 @@ concurrency:
   group: forged-recover
   cancel-in-progress: true
 jobs:
-  hold:
-    runs-on: ubuntu-latest
-    steps:
-      - run: sleep 300
   recover:
-    needs: hold
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, no-such-runner-orca-probe]
     steps:
-      - run: echo never starts
+      - run: echo never gets a runner
