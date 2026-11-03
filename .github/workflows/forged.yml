@@ -9,6 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   recover:
-    runs-on: [self-hosted, no-such-runner-orca-probe]
+    runs-on: ubuntu-latest
+    environment: protected-probe
     steps:
-      - run: echo never gets a runner
+      - run: echo waiting for environment approval
