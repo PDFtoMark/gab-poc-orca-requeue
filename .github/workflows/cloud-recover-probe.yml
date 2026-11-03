@@ -1,0 +1,37 @@
+name: Recover Relay Staging C4 Image
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Enter RECOVER_STAGING_ASIA_C4_IMAGE
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      recover: ${{ steps.trigger.outputs.recover }}
+    steps:
+      - id: trigger
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test "${GITHUB_EVENT_NAME}" = workflow_dispatch; then
+            test "${CONFIRMATION}" = RECOVER_STAGING_ASIA_C4_IMAGE
+            echo "recover=true" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+          echo "recover=false" >> "${GITHUB_OUTPUT}"
+  recover:
+    needs: gate
+    if: ${{ needs.gate.outputs.recover == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Privileged recovery body
+        run: |
+          echo "CONFIRMATION GATE BYPASSED - privileged recovery body reached"
+          echo "confirmation=${{ inputs.confirmation }}"
